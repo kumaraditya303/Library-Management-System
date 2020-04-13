@@ -1,0 +1,35 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<form class='text-center mt-5 container' style="width: 60%;" action='/add/book' method='POST'>
+     {% for message in get_flashed_messages() %}
+     <div class='alert alert-warning'>
+          <button type='button' class='close' data-dismiss='alert'>&times;</button>
+          {{message}}
+     </div>
+     {% endfor %}
+     <h1 class='display-4 text-center'>Add Book</h1><br>
+     <div class="input-group mb-3">
+          <div class="input-group-prepend">
+               <span class="input-group-text"><i class="fa fa-book"></i></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Name" name="name" required autofocus>
+     </div>
+     <div class="input-group mb-3">
+          <div class="input-group-prepend">
+               <span class="input-group-text"><i class="fa fa-user"></i></span>
+          </div>
+          <input type="text" class="form-control" name='author' placeholder="Author" required>
+     </div>
+     <div class="input-group mb-3">
+          <div class="input-group-prepend">
+               <span class="input-group-text"><i class="fa fa-copy"></i></span>
+          </div>
+          <input type="number" class="form-control" name='number' required min="1">
+     </div>
+     <textarea name="description" class="form-control mb-3" cols="30" rows="2" required
+          placeholder="Book Description"></textarea>
+     <button class='btn btn-lg btn-primary btn-block' type='submit'>Submit</button>
+</form>
+
+{% endblock %}
