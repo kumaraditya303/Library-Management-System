@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static',filename='user.png')}}">
+</head>
+<title>{% block title %}{% endblock %}</title>
+
+
+</head>
+
+<body
+    style="font-family: 'PT Sans', sans-serif;background-image: url(https://www.pixelstalk.net/wp-content/uploads/2016/08/Library-Desktop-Wallpaper-768x480.jpg);background-size: cover;">
+    <nav class='navbar navbar-expand-lg navbar-dark bg-dark'>
+
+        <div class='container-fluid' id='navbarNav'>
+            <ul class='nav navbar-nav navbar-brand'>
+                <li class='nav-item'>
+                    <a class='navbar-brand' href='/'>Home</a>
+                </li>
+            </ul>
+            <ul class='nav navbar-nav ml-auto'>
+                {% block nav %}{% endblock %}
+                <li class='nav-item active ml-4'>
+                    <a class='nav-link' href='/register'>Register</a>
+                </li>
+                <li class='nav-item active ml-4'>
+                    <a class='nav-link' href='/login'>Login</a>
+                </li>
+                <li class='nav-item active ml-4'>
+                    <a class='nav-link' href='/admin'>Admin</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container" style="color: white;text-shadow: 2px 2px 12px #000000;">
+        {% block content %}{% endblock %}
+        <hr style="border: 5px solid white;border-radius: 5px;" />
+        <footer>
+            <p>&copy; {{ year }} - Library Management System - Kumar Aditya</p>
+        </footer>
+    </div>
+
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>
+    <script src="{{ url_for('static',filename='script.js')}}"></script>
+</body>
+
+</html>

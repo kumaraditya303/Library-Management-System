@@ -1,0 +1,81 @@
+{% extends "withoutlogin.html" %}
+{% block title %}Home{% endblock %}
+{% block nav %}
+<div class="input-group mb-3" style="width: 300px;">
+    <div class="input-group-prepend" >
+        <span class="input-group-text"><i class="fa fa-search"></i></span>
+    </div>
+    <input type="search" class="form-control" placeholder="Search books" id="search" autofocus>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="text-center mt-5 container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{message}}
+    </div>
+    {% endfor %}
+    <h1 class="display-4">Welcome to Library Management System</h1>
+    <p class="lead">This is Python Flask Based Library System</p>
+    {% if books %}
+    <hr style="border: 3px solid white; border-radius: 5px;" />
+    <h1 class="display-4 text-center">All Books</h1>
+    <br>
+    <table class="table table-dark table-bordered" id='data'>
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Details</th>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td scope="row">{{ book.id }}</td>
+                <td>{{ book.name }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{book.id}}">
+                        Details
+                    </button>
+                </td>
+                <div class="modal" id="{{ book.id}}" style="color: black;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="container">
+                                    <i class="fa fa-book" style="float: left;"></i>{{book.name}}
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    &times;
+                                </button>
+                            </div>
+                            <div class="text-justify ml-5">
+                                Author ~ {{book.author}} <br>
+                                Date Added ~ {{book.date_added}} <br>
+                                Description ~ {{book.description}}
+
+                            </div>
+                            <div class="modal-footer">
+                                {% if book.present_copy ==0 %}
+                                <button class="btn btn-primary" onclick="alert('Book already issued!');">
+                                    Issue
+                                </button>
+                                {% else %}
+                                <button class="btn btn-primary"
+                                    onclick="location.replace('/issue/book?book={{book.id}}');">
+                                    Issue
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+{% endblock %}
