@@ -1,0 +1,40 @@
+{% extends 'withoutlogin.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<form class='text-center mt-5 container' style="width: 40%;" action='/register' method='POST'>
+     {% for message in get_flashed_messages() %}
+     <div class='alert alert-warning'>
+         <button type='button' class='close' data-dismiss='alert'>&times;</button>
+         {{message}}
+     </div>
+     {% endfor %}
+     <h1 class='display-4 text-center'>Register</h1><br>
+     <div class="input-group mb-3">
+          <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fa fa-user"></i></span>
+          </div>
+          <input type="text" class="form-control" placeholder="Name" name="name" required autofocus>
+      </div>
+     <div class="input-group mb-3">
+         <div class="input-group-prepend">
+             <span class="input-group-text"><i class="fa fa-at"></i></span>
+         </div>
+         <input type="email" class="form-control" placeholder="Email" name="email" required >
+     </div>
+     <div class="input-group mb-3">
+         <div class="input-group-prepend">
+             <span class="input-group-text"><i class="fa fa-lock"></i></span>
+         </div>
+         <input type="password" class="form-control" placeholder="Password" name='password' minlength="8" id="pwd">
+         <div class='input-group-append'>
+             <div class='input-group-text'>
+                 <div class='custom-control custom-switch'>
+                     <input type='checkbox' class='custom-control-input' id='showpwd' name="password" >
+                     <label class='custom-control-label' for='showpwd'></label>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <button class='btn btn-lg btn-primary btn-block' type='submit'>Register</button>
+ </form>
+{% endblock %}
