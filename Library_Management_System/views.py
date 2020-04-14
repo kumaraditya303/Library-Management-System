@@ -447,6 +447,8 @@ def return_book():
     book.issued_by = 0
     book.date_issued = None
     book.date_return = None
+    book.copies.issued_copy -= 1
+    book.copies.present_copy += 1
     db.session.commit()
     flash('Book returned successfully!')
     return redirect(url_for('dashboard'))
