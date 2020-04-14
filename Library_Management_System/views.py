@@ -238,7 +238,7 @@ def admin_login():
         return redirect(url_for('admin_html'))
 
 
-@app.route('/admin_dashboard')
+@app.route('/admin_dashboard',methods=['GET'])
 @requires_roles('admin')
 def admin_dashboard():
 
