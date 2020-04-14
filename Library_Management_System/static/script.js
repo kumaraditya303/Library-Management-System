@@ -6,5 +6,11 @@ $(document).ready(function () {
           else {
                $('#pwd').attr('type', 'password');
           }
-     })
+     });
+     $("#search").on('keyup', function () {
+          var search = $(this).val().toLowerCase();
+          $('#data tbody tr').filter(function () {
+               $(this).toggle($(this).text().toLowerCase().indexOf(search) > -1);
+          });
+     });
 });

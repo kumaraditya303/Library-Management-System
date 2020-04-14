@@ -1,5 +1,13 @@
 {% extends "withoutlogin.html" %}
 {% block title %}Home{% endblock %}
+{% block nav %}
+<div class="input-group mb-3" style="width: 300px;">
+    <div class="input-group-prepend" >
+        <span class="input-group-text"><i class="fa fa-search"></i></span>
+    </div>
+    <input type="search" class="form-control" placeholder="Search books" id="search" autofocus>
+</div>
+{% endblock %}
 {% block content %}
 
 <div class="text-center mt-5 container">
@@ -15,7 +23,7 @@
     <hr style="border: 3px solid white; border-radius: 5px;" />
     <h1 class="display-4 text-center">All Books</h1>
     <br>
-    <table class="table table-dark table-bordered">
+    <table class="table table-dark table-bordered" id='data'>
         <thead>
             <th scope="col">#</th>
             <th scope="col">Name</th>
