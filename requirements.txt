@@ -1,6 +1,7 @@
-Flask_Login==0.5.0
 Flask==1.1.1
+Flask_Testing==0.8.0
 APScheduler==3.6.3
-Flask_SQLAlchemy==2.2
 Werkzeug==0.16.1
+Flask_SQLAlchemy==2.2
 Flask_Mail==0.9.1
+Flask_Login==0.5.0
