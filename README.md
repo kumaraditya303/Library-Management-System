@@ -80,7 +80,8 @@ $ flask run
 ```
 - Navigate to http://127.0.0.1:5000/  
 
-**You can also used the included shell script.**
+**You can also used the included shell [script](https://github.com/rahuladitya303/Library-Managament-System/blob/master/Library_Management_System/start.sh).**
 ```sh
 $ ./start.sh
 ```
+# Project made and maintained by [Kumar Aditya](https://www.github.com/rahuladitya303)
