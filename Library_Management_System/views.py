@@ -238,7 +238,7 @@ def admin_login():
         return redirect(url_for('admin_html'))
 
 
-@app.route('/admin_dashboard',methods=['GET'])
+@app.route('/admin/dashboard',methods=['GET'])
 @requires_roles('admin')
 def admin_dashboard():
 
@@ -385,7 +385,7 @@ def new_issue():
         )
 
 
-@app.route('/new/return', methods=['GET'])
+@app.route('/return/book', methods=['GET'])
 @login_required
 def return_book_html():
     user = Copy.query.filter_by(issued_by=current_user.id).all()
@@ -405,7 +405,7 @@ def return_book_html():
         )
 
 
-@app.route('/new/return', methods=['POST'])
+@app.route('/return/book', methods=['POST'])
 @login_required
 def return_book():
     book_id = request.form['book']

@@ -1,7 +1,7 @@
 {% extends 'withlogin.html' %}
 {% block title %}New Issue{% endblock %}
 {% block content %}
-<form class='text-center mt-5 container' style="width: 60%;" action="/new/issue" method='POST'>
+<form class='text-center mt-5 container' style="width: 60%;" action="/issue/book" method='POST'>
     {% for message in get_flashed_messages() %}
     <div class='alert alert-warning'>
         <button type='button' class='close' data-dismiss='alert'>&times;</button>
