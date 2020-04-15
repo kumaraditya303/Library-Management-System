@@ -17,7 +17,6 @@ class Config(object):
     MAIL_USE_SSL = True
     MAIL_USERNAME = 'libmgmtstm@gmail.com'
     MAIL_PASSWORD = 'python-flask'
-
     ADMIN_USERNAME = 'ADMIN_USERNAME'
     ADMIN_PASSWORD = 'ADMIN_PASSWORD'
 
