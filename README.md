@@ -5,7 +5,9 @@
 A Python Flask based Library Management System. This Flask app has all the features of a Library Management System like adding, removing, and creating copies of books. A user can issue 2 books at ones. This app has a separate admin tab for admin users.
 # Screenshot
 <img src='https://github.com/rahuladitya303/Library-Managament-System/blob/master/Library_Management_System/static/screenshot.png'/>
+
 # Project Structure
+
 ```sh
 .
 ├── config.py  
@@ -40,6 +42,7 @@ A Python Flask based Library Management System. This Flask app has all the featu
     └── test_view.py  
 ```
 ___
+
 # Configuration
 - Make the changes to these lines in [config.py](https://github.com/rahuladitya303/Library-Managament-System/blob/master/config.py)
 ```python
@@ -53,7 +56,9 @@ ___
     ADMIN_PASSWORD = 'ADMIN_PASSWORD' # ADMIN PASSWORD
 ```
 ___
+
 # Start
+
 - Clone the repository.
 ```sh
 $ git clone https://github.com/rahuladitya303/Library-Managament-System.git
