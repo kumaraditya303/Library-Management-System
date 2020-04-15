@@ -8,36 +8,36 @@ A Python Flask based Library Management System. This Flask app has all the featu
 # Project Structure
 ```sh
 .
-├── config.py
-├── data.db
-├── Library_Management_System
-│   ├── __init__.py
-│   ├── models.py
-│   ├── static
-│   │   ├── script.js
-│   │   └── user.png
-│   ├── templates
-│   │   ├── add_book.html
-│   │   ├── admin_dashboard.html
-│   │   ├── admin.html
-│   │   ├── admin_layout.html
-│   │   ├── dashboard.html
-│   │   ├── index.html
-│   │   ├── issue.html
-│   │   ├── login.html
-│   │   ├── register.html
-│   │   ├── remove_book.html
-│   │   ├── return.html
-│   │   ├── withlogin.html
-│   │   └── withoutlogin.html
-│   └── views.py
-├── LICENSE
-├── README.md
-├── requirements.txt
-├── runserver.py
-└── tests
-    ├── __init__.py
-    └── test_view.py
+├── config.py  
+├── data.db  
+├── Library_Management_System  
+│   ├── __init__.py  
+│   ├── models.py  
+│   ├── static  
+│   │   ├── script.js  
+│   │   └── user.png  
+│   ├── templates  
+│   │   ├── add_book.html  
+│   │   ├── admin_dashboard.html  
+│   │   ├── admin.html  
+│   │   ├── admin_layout.html  
+│   │   ├── dashboard.html  
+│   │   ├── index.html  
+│   │   ├── issue.html  
+│   │   ├── login.html  
+│   │   ├── register.html  
+│   │   ├── remove_book.html  
+│   │   ├── return.html  
+│   │   ├── withlogin.html  
+│   │   └── withoutlogin.html  
+│   └── views.py  
+├── LICENSE  
+├── README.md  
+├── requirements.txt  
+├── runserver.py  
+└── tests  
+    ├── __init__.py  
+    └── test_view.py  
 ```
 ___
 # Configuration
