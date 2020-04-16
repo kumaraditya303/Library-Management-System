@@ -297,7 +297,7 @@ def admin_logout():
     return redirect(url_for('index'))
 
 
-@app.route('/new/issue', methods=['POST'])
+@app.route('/issue/book', methods=['POST'])
 @login_required
 def issue():
     global direct
@@ -347,7 +347,7 @@ def issue():
     return redirect(url_for('dashboard'))
 
 
-@app.route('/new/issue', methods=['GET'])
+@app.route('/issue/book', methods=['GET'])
 @login_required
 def new_issue():
     books = Book.query.filter(Book.present_copy > 0).all()
