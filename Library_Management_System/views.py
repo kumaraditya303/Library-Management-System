@@ -19,7 +19,7 @@ direct = 0
 
 
 def notify():
-    books = Copy.query.filter(Copy.issued_by > 0).all()
+    books = Copy.query.filter(Copy.issued_by != None).all()
     for book in books:
         if book.date_return.hour == datetime.now().hour and book.date_return.date == datetime.now().date:
             send_mail(
@@ -238,7 +238,7 @@ def admin_login():
         return redirect(url_for('admin_html'))
 
 
-@app.route('/admin/dashboard',methods=['GET'])
+@app.route('/admin/dashboard', methods=['GET'])
 @requires_roles('admin')
 def admin_dashboard():
 
@@ -303,7 +303,7 @@ def issue():
     global direct
     direct = 0
     book_id = request.form['book']
-    book = Copy.query.filter_by(book=int(book_id), issued_by=0).first()
+    book = Copy.query.filter_by(book=int(book_id), issued_by=None).first()
     book.issued_by = current_user.id
     book.copies.issued_copy += 1
     book.copies.present_copy -= 1
@@ -444,7 +444,7 @@ def return_book():
 
 </html>
     """)
-    book.issued_by = 0
+    book.issued_by = None
     book.date_issued = None
     book.date_return = None
     book.copies.issued_copy -= 1
