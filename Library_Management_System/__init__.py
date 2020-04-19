@@ -9,7 +9,7 @@ from flask_mail import Mail
 from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
-app.config.from_object('config.DevelopmentConfig')
+app.config.from_object('config.ProductionConfig')
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
