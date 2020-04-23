@@ -14,8 +14,8 @@ class Config(object):
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
-    MAIL_USERNAME = 'libmgmtstm@gmail.com'
-    MAIL_PASSWORD = 'python-flask'
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMIN_USERNAME = 'ADMIN_USERNAME'
     ADMIN_PASSWORD = 'ADMIN_PASSWORD'
 
