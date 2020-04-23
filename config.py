@@ -7,8 +7,7 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'THISSHOULDBEKEPTSECRET'
-    SQLALCHEMY_DATABASE_URI = "postgres://abhqmfcmupjdte:9a29eaa024f3bc11ac8efaf1f59be6d901faffd5d3a0abe5d3cf9802e8c9108e@ec2-52-6-143-153.compute-1.amazonaws.com:5432/d9ma6ekrd6qc0d"
-
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     MAIL_SERVER = 'smtp.gmail.com'
