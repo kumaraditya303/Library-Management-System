@@ -27,5 +27,5 @@ before_script:
 
 test:
   script:
-    - python --cov=Library_Management_System tests/
+    - pytest --cov=Library_Management_System tests/
     
