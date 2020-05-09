@@ -280,7 +280,7 @@ def add_book_data():
     else:
         book = Book(name=name, author=author,
                     description=description, total_copy=number, present_copy=number, issued_copy=0)
-        for i in range(int(number)):
+        for _ in range(int(number)):
             copy = Copy(date_added=datetime.now())
             book.copy.append(copy)
         db.session.add(book)
