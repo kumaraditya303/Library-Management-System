@@ -2,24 +2,26 @@
 Routes and views for the flask application.
 """
 
-from datetime import *
+from datetime import datetime, timedelta
 from functools import wraps
 from threading import Thread
 
-from flask import *
+from flask import Flask, redirect, render_template, flash, url_for, request
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_mail import Message
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from Library_Management_System import app, db, login_manager, mail, scheduler
-from Library_Management_System.models import *
+from Library_Management_System.models import Copy, User, Book
 
-sess = 'user'
-direct = 0
+
+class globalize:
+    sess = 'user'
+    direct = 0
 
 
 def notify():
-    books = Copy.query.filter(Copy.issued_by != None).all()
+    books = Copy.query.filter(Copy.issued_by is not None).all()
     for book in books:
         if book.date_return.hour == datetime.now().hour and book.date_return.date == datetime.now().date:
             send_mail(
@@ -81,7 +83,7 @@ def requires_roles(roles):
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
-            if not sess == roles:
+            if not globalize.sess == roles:
 
                 return unauthorized()
             return f(*args, **kwargs)
@@ -100,24 +102,22 @@ def index():
             year=datetime.now().year,
             books=books
         )
-    else:
-        flash('No books are in library!')
-        return render_template(
-            'index.html',
-            year=datetime.now().year
 
-        )
+    flash('No books are in library!')
+    return render_template(
+        'index.html',
+        year=datetime.now().year
+    )
 
 
 @app.route('/issue_direct/<id>', methods=['GET'])
 def issue_direct(id):
     if current_user.is_authenticated:
-        global direct
-        direct = id
+
+        globalize.direct = id
         return redirect(url_for('new_issue'))
-    else:
-        direct = id
-        return redirect(url_for('login'))
+    globalize.direct = id
+    return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['GET'])
@@ -135,12 +135,12 @@ def log_in_user():
     chkusr = User.query.filter_by(email=email).first()
     if chkusr and check_password_hash(chkusr.password, password):
         login_user(chkusr)
-        if int(direct) > 0:
+        if int(globalize.direct) > 0:
             return redirect(url_for('new_issue'))
         return redirect('/dashboard')
-    else:
-        flash('Invalid Credentials!')
-        return redirect(url_for('login'))
+
+    flash('Invalid Credentials!')
+    return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET'])
@@ -161,13 +161,13 @@ def register_user():
     if chkusr:
         flash('User already exists!')
         return redirect(url_for('register'))
-    else:
-        user = User(name=name, email=email, password=password)
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        send_mail('Registration Success Notification', 'admin@librarymgmtsystem.com', [
-            current_user.email], f"""
+
+    user = User(name=name, email=email, password=password)
+    db.session.add(user)
+    db.session.commit()
+    login_user(user)
+    send_mail('Registration Success Notification', 'admin@librarymgmtsystem.com', [
+        current_user.email], f"""
 <!DOCTYPE html>
 <html lang="en">
 
@@ -209,12 +209,12 @@ def dashboard():
             year=datetime.now().year,
             books=copies
         )
-    else:
-        flash("You don't have books issued!")
-        return render_template(
-            'dashboard.html',
-            year=datetime.now().year
-        )
+
+    flash("You don't have books issued!")
+    return render_template(
+        'dashboard.html',
+        year=datetime.now().year
+    )
 
 
 @app.route('/admin', methods=['GET'])
@@ -227,15 +227,15 @@ def admin_html():
 
 @app.route('/admin', methods=['POST'])
 def admin_login():
-    global sess
+
     username = request.form['username']
     password = request.form['password']
     if username == app.config['ADMIN_USERNAME'] and password == app.config['ADMIN_PASSWORD']:
-        sess = 'admin'
+        globalize.sess = 'admin'
         return redirect(url_for('admin_dashboard'))
-    else:
-        flash('Invalid Credentials!')
-        return redirect(url_for('admin_html'))
+
+    flash('Invalid Credentials!')
+    return redirect(url_for('admin_html'))
 
 
 @app.route('/admin/dashboard', methods=['GET'])
@@ -249,12 +249,12 @@ def admin_dashboard():
             books=books,
             year=datetime.now().year
         )
-    else:
-        flash('No books are there in library!')
-        return render_template(
-            'admin_dashboard.html',
-            year=datetime.now().year
-        )
+
+    flash('No books are there in library!')
+    return render_template(
+        'admin_dashboard.html',
+        year=datetime.now().year
+    )
 
 
 @app.route('/add/book', methods=['GET'])
@@ -277,31 +277,31 @@ def add_book_data():
     if book:
         flash('Book already exists!')
         return redirect(url_for('add_book'))
-    else:
-        book = Book(name=name, author=author,
-                    description=description, total_copy=number, present_copy=number, issued_copy=0)
-        for i in range(int(number)):
-            copy = Copy(date_added=datetime.now())
-            book.copy.append(copy)
-        db.session.add(book)
-        db.session.commit()
-        flash('Book added successfully!')
-        return redirect(url_for('admin_dashboard'))
+
+    book = Book(name=name, author=author,
+                description=description, total_copy=number, present_copy=number, issued_copy=0)
+    for i in range(int(number)):
+        copy = Copy(date_added=datetime.now())
+        book.copy.append(copy)
+    db.session.add(book)
+    db.session.commit()
+    flash('Book added successfully!')
+    return redirect(url_for('admin_dashboard'))
 
 
 @app.route('/admin/logout')
 @requires_roles('admin')
 def admin_logout():
-    global sess
-    sess = 'user'
+
+    globalize.sess = 'user'
     return redirect(url_for('index'))
 
 
 @app.route('/issue/book', methods=['POST'])
 @login_required
 def issue():
-    global direct
-    direct = 0
+
+    globalize.direct = 0
     book_id = request.form['book']
     book = Copy.query.filter_by(book=int(book_id), issued_by=None).first()
     book.issued_by = current_user.id
@@ -352,10 +352,8 @@ def issue():
 def new_issue():
     books = Book.query.filter(Book.present_copy > 0).all()
     if books and len(current_user.book) < 2:
-        global direct
         if current_user.book:
             t = current_user.book[0].copies.name
-            print(t)
         else:
             t = ""
 
@@ -363,7 +361,7 @@ def new_issue():
             'issue.html',
             books=Book.query.all(),
             year=datetime.now().year,
-            auto=int(direct),
+            auto=int(globalize.direct),
             t=t
         )
     elif len(current_user.book) == 2:
@@ -374,15 +372,13 @@ def new_issue():
             books=Book.query.all(),
             flag=True
         )
-
-    else:
-        flash('No books are currently available!')
-        return render_template(
-            'issue.html',
-            year=datetime.now().year,
-            books=Book.query.all(),
-            flag=True
-        )
+    flash('No books are currently available!')
+    return render_template(
+        'issue.html',
+        year=datetime.now().year,
+        books=Book.query.all(),
+        flag=True
+    )
 
 
 @app.route('/return/book', methods=['GET'])
@@ -395,14 +391,14 @@ def return_book_html():
             books=user,
             year=datetime.now().year
         )
-    else:
-        flash("You don't have any books issued!")
-        return render_template(
-            'return.html',
-            year=datetime.now().year,
-            books=Book.query.all(),
-            flag=True
-        )
+
+    flash("You don't have any books issued!")
+    return render_template(
+        'return.html',
+        year=datetime.now().year,
+        books=Book.query.all(),
+        flag=True
+    )
 
 
 @app.route('/return/book', methods=['POST'])
@@ -464,14 +460,14 @@ def remove_book():
             year=datetime.now().year,
             books=Book.query.all()
         )
-    else:
-        flash('No books are available to be removed!')
-        return render_template(
-            'remove_book.html',
-            year=datetime.now().year,
-            books=Book.query.all(),
-            flag=True
-        )
+
+    flash('No books are available to be removed!')
+    return render_template(
+        'remove_book.html',
+        year=datetime.now().year,
+        books=Book.query.all(),
+        flag=True
+    )
 
 
 @app.route('/remove/book', methods=['POST'])
@@ -489,8 +485,7 @@ def remove_book_db():
 @login_required
 def logout():
     logout_user()
-    global direct
-    direct = 0
+    globalize.direct = 0
     return redirect(url_for('index'))
 
 

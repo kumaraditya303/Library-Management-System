@@ -1,4 +1,5 @@
-from Library_Management_System import db, UserMixin
+from Library_Management_System import db
+from flask_login import UserMixin
 
 
 class User(UserMixin, db.Model):

@@ -1,8 +1,7 @@
 import os
-basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Config(object):
+class Config():
     DEBUG = True
     TESTING = False
     CSRF_ENABLED = True
