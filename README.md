@@ -2,6 +2,7 @@
 # Library Management System
 
 A Python Flask based Library Management System. This Flask app has all the features of a Library Management System like adding, removing, and creating copies of books. A user can issue 2 books at ones. This app has a separate admin tab for admin users. This project also has mail functionality to send mails to user for notification.
+Project live on [Heroku](http://librarymgmtsystem.herokuapp.com)
 # Screenshot
 <img src='https://github.com/rahuladitya303/Library-Managament-System/blob/master/Library_Management_System/static/screenshot.png'/>
 
