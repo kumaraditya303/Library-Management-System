@@ -20,7 +20,7 @@ class globalize:
     direct = 0
 
 
-def notify():
+async def notify():
     books = Copy.query.filter(Copy.issued_by is not None).all()
     for book in books:
         if book.date_return.hour == datetime.now().hour and book.date_return.date == datetime.now().date:
