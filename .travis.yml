@@ -8,7 +8,7 @@ services:
 before_install:
   - docker build -t librarymanagamentsystem:latest .
   - docker ps -a
-  - docker run librarymanagamentsystem:latest /bin/sh -c "cd app; pytest"
+  - docker run librarymanagamentsystem:latest /bin/sh -c "pytest"
 install:
   - pip install -r requirements.txt
 before_script:
