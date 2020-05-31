@@ -5,14 +5,14 @@ python:
   - "3.8"
 services:
   - docker
-env:
-  - FLASK_APP="runserver.py"
-  - DATABASE_URL="sqlite:///data.db"
 before_install:
   - docker build --pull --rm -f "Dockerfile" -t librarymanagamentsystem:latest "."
+  - docker ps -a
 install:
   - pip install -r requirements.txt
 before_script:
+  - export FLASK_APP=runserver.py
+  - export DATABASE_URL=sqlite:///data.db
   - flask db init
   - flask db migrate -m "Initial Migration"
 script:
