@@ -1,9 +1,22 @@
 language: python
 os: linux
-dist: bionic
+dist: focal
 python:
-  - "3.8.2"
-
-script:
+  - "3.8"
+services:
+  - docker
+env:
+  - FLASK_APP=runserver.py
+  - DATABASE_URL=sqlite:///:memory:
+before_install:
+  - docker build --pull --rm -f "Dockerfile" -t librarymanagamentsystem:latest "."
+install:
   - pip install -r requirements.txt
+before_script:
+  - flask db init
+  - flask db migrate -m "Initial Migration"
+script:
   - pytest --cov=Library_Management_System tests/
+notifications:
+  on_success: always
+  on_failure: always
