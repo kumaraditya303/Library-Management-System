@@ -6,8 +6,8 @@ python:
 services:
   - docker
 env:
-  - FLASK_APP:runserver.py
-  - DATABASE_URL: sqlite:///data.db
+  - FLASK_APP = runserver.py
+  - DATABASE_URL = sqlite:///data.db
 before_install:
   - docker build --pull --rm -f "Dockerfile" -t librarymanagamentsystem:latest "."
 install:
