@@ -1,4 +1,9 @@
-![Build Status](https://travis-ci.org/kumaraditya303/Library-Managament-System.svg?branch=master)![Python package](https://github.com/kumaraditya303/Library-Managament-System/workflows/Python%20package/badge.svg?branch=master) [![HitCount](http://hits.dwyl.com/kumaraditya303/Library-Management-System.svg)](http://hits.dwyl.com/kumaraditya303/Library-Management-System)
+![Build Status](https://travis-ci.org/kumaraditya303/Library-Management-System.svg?branch=master)
+
+![Python package](https://github.com/kumaraditya303/Library-Management-System/workflows/Python%20package/badge.svg?branch=master) 
+
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkumaraditya303%2FLibrary-Management-System&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 # Library Management System
 
 A Python Flask based Library Management System. This Flask app has all the features of a Library Management System like adding, removing, and creating copies of books. A user can issue 2 books at ones. This app has a separate admin tab for admin users. This project also has mail functionality to send mails to user for notification.
