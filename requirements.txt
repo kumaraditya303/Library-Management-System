@@ -8,4 +8,4 @@ Werkzeug==2.0.0
 Flask_Migrate==2.7.0
 gunicorn==20.1.0
 psycopg2-binary==2.8.6
-pytest-cov==2.11.1
+pytest-cov==2.12.0
