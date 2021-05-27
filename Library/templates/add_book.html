@@ -1,5 +1,5 @@
 {% extends 'admin_layout.html' %}
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}Admin/Librarian Dashboard{% endblock %}
 {% block content %}
 <form class='text-center mt-5 container' style="width: 60%;" action='/add/book' method='POST'>
      {% for message in get_flashed_messages() %}

@@ -68,11 +68,18 @@ class RegisterView(MethodView):
     def post(self):
         name = request.form.get("name")
         email = request.form.get("email")
+        isadmin = request.form.get("isAdmin")
+        
         password = generate_password_hash(request.form.get("password"), method="sha256")
         if User.query.filter_by(email=email).first():
             flash("User already exists!")
             return redirect(url_for("main.register"))
-        user = User(name=name, email=email, password=password)
+
+        if(isadmin == "on"):
+            user = User(name=name, email=email, password=password, admin=True)
+        else:
+            user = User(name=name, email=email, password=password)
+        
         db.session.add(user)
         db.session.commit()
         login_user(user)
@@ -93,7 +100,7 @@ class AdminView(MethodView):
             login_user(user)
             if request.args.get("next"):
                 return redirect(request.args.get("next"))
-            return redirect(url_for("main.dashboard"))
+            return redirect(url_for("main.admin_dashboard"))
         flash("Invalid Credentials!")
         return redirect(url_for("main.admin"))
 
@@ -101,7 +108,9 @@ class AdminView(MethodView):
 @main.route("/dashboard", methods=["GET"])
 @login_required
 def dashboard():
-    copies = Copy.query.filter_by(issued_by=current_user.id).all()
+    copies = db.session.query(Book.id, Book.name, Book.author, Copy.date_issued, Copy.date_return) \
+    .join(Book).filter(Copy.book == Book.id).filter(Copy.issued_by == current_user.id).all()
+
     if copies:
         return render_template("dashboard.html", year=datetime.now().year, books=copies)
 
@@ -118,8 +127,19 @@ def admin_dashboard():
         return render_template(
             "admin_dashboard.html", books=books, year=datetime.now().year
         )
-    flash("No books are there in library!")
+    flash("No books are there in library! Add Some")
     return render_template("admin_dashboard.html", year=datetime.now().year)
+
+
+class ShowStudentView(MethodView):
+    def get(self):
+        students = User.query.filter_by(admin = False).all()
+        print(students)
+        if students:
+            return render_template("show_students.html", student=students, year=datetime.now().year)
+
+        flash("No Student registered till now")
+        return render_template("admin_dashboard.html", year=datetime.now().year)
 
 
 class AddBookView(MethodView):
@@ -174,40 +194,56 @@ class IssueBookView(MethodView):
 
     def post(self):
         book_id = int(request.form.get("book"))
-        book = Copy.query.filter_by(book=book_id, issued_by=None).first()
-        book.issued_by = current_user.id
-        book.copies.issued_copy += 1
-        book.copies.present_copy -= 1
-        book.date_issued = datetime.now()
-        book.date_return = datetime.now() + timedelta(days=1)
+        copy = Copy.query.filter_by(
+            book=book_id, issued_by=None
+        ).first()
+        print(copy)
+        copy.book = book_id
+        copy.issued_by = current_user.id
+        copy.date_issued = datetime.now()
+        copy.date_return = datetime.now() + timedelta(days=1)
         db.session.commit()
+
+        book = Book.query.filter_by(
+            id=book_id
+        ).first()
+        print(book)
+        book.issued_copy += 1
+        book.present_copy -= 1
+        db.session.commit()
+
         flash("Book issued successfully!")
         return redirect(url_for("main.dashboard"))
 
 
 class ReturnBookView(MethodView):
     def get(self):
-        copies = Copy.query.filter_by(issued_by=current_user.id).all()
+        copies = db.session.query(Book.id, Book.name, Book.author, Copy.issued_by) \
+        .join(Book).filter(Copy.book == Book.id).filter(Copy.issued_by == current_user.id).all()
+
         if copies:
             return render_template(
                 "return.html", books=copies, year=datetime.now().year
             )
 
         flash("You don't have any books issued!")
-        return render_template(
-            "return.html", year=datetime.now().year, books=Book.query.all()
-        )
+        return render_template(url_for("main.dashboard"))
 
     def post(self):
-        book_id = request.form.get("book")
-        book = Copy.query.filter_by(
-            book=int(book_id), issued_by=current_user.id
+        book_id = int(request.form.get("book"))
+        copy = Copy.query.filter_by(
+            book=book_id, issued_by=current_user.id
         ).first()
-        book.issued_by = None
-        book.date_issued = None
-        book.date_return = None
-        book.copies.issued_copy -= 1
-        book.copies.present_copy += 1
+        copy.issued_by = None
+        copy.date_issued = None
+        copy.date_return = None
+        db.session.commit()
+
+        book = Book.query.filter_by(
+            id=book_id
+        ).first()
+        book.issued_copy -= 1
+        book.present_copy += 1
         db.session.commit()
         flash("Book returned successfully!")
         return redirect(url_for("main.dashboard"))
@@ -238,6 +274,11 @@ class RemoveBookView(MethodView):
 main.add_url_rule("/register", view_func=RegisterView.as_view("register"))
 main.add_url_rule("/login", view_func=LoginView.as_view("login"))
 main.add_url_rule("/admin", view_func=AdminView.as_view("admin"))
+
+main.add_url_rule(
+    "/show/students",
+    view_func=login_required(requires_admin(ShowStudentView.as_view("show_students"))),
+)
 main.add_url_rule(
     "/add/book",
     view_func=login_required(requires_admin(AddBookView.as_view("add_book"))),

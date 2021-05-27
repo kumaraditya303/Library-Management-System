@@ -27,9 +27,9 @@
           <tbody>
                {% for book in books %}
                <tr>
-                    <td scope='row'>{{ book.copies.id }}</td>
-                    <td>{{ book.copies.name }}</td>
-                    <td>{{ book.copies.author }}</td>
+                    <td scope='row'>{{ book.id }}</td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.author }}</td>
                     <td>{{ book.date_issued }}</td>
                     <td>{{ book.date_return }}</td>
                </tr>

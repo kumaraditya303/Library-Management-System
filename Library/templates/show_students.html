@@ -1,0 +1,39 @@
+{% extends 'admin_layout.html' %}
+{% block title %}Admin/Librarian Dashboard{% endblock %}
+{% block content %}
+    
+{% for message in get_flashed_messages() %}
+
+     <div class='alert alert-warning'>
+          <button type='button' class='close' data-dismiss='alert'>&times;</button>
+          {{message}}
+     </div>
+
+{% endfor %}
+   
+{% if student %}
+
+<div class=' text-center container-fluid'>
+     <h1 class='display-4 text-center'>Students</h1><br>
+
+     <table class="table table-dark table-bordered">
+          <thead>
+               <th scope="col">Roll No</th>
+               <th scope="col">Name</th>
+               <th scope="col">Email</th>
+          </thead>
+          <tbody>
+               {% for stu in student %}
+               <tr>
+                    <td scope='row'>{{ stu.id }}</td>
+                    <td>{{ stu.name }}</td>
+                    <td>{{ stu.email }}</td>
+               </tr>
+               {% endfor %}
+          </tbody>
+     </table>
+</div>
+
+{% endif %}
+
+{% endblock %}

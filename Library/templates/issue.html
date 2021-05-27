@@ -15,13 +15,13 @@
         </div>
         <select name="book" class="form-control" required autofocus placeholder='Select'>
             {% for book in books %}
-            {% if book.present_copy==0 or (book in current_user.book) %}
-            <option value='{{ book.id }}' name='book' disabled>{{ book.name }} by {{ book.author }}</option>
-            {% else if request.args.get('book') == book.id %}
-            <option value='{{ book.id }}' name='book' selected>{{ book.name }} by {{ book.author }}</option>
-            {% else %}
-            <option value='{{ book.id }}' name='book'>{{ book.name }} by {{ book.author }}</option>
-            {% endif %}
+                {% if book.present_copy==0 or (book in current_user.book) %}
+                    <option value='{{ book.id }}' name='book' disabled>{{ book.name }} by {{ book.author }}</option>
+                {% elif request.args.get('book') == book.id %}
+                    <option value='{{ book.id }}' name='book' selected>{{ book.name }} by {{ book.author }}</option>
+                {% else %}
+                    <option value='{{ book.id }}' name='book'>{{ book.name }} by {{ book.author }}</option>
+                {% endif %}
             {% endfor %}
         </select>
     </div>

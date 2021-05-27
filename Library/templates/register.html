@@ -9,18 +9,21 @@
      </div>
      {% endfor %}
      <h1 class='display-4 text-center'>Register</h1><br>
+
      <div class="input-group mb-3">
           <div class="input-group-prepend">
               <span class="input-group-text"><i class="fa fa-user"></i></span>
           </div>
           <input type="text" class="form-control" placeholder="Name" name="name" required autofocus>
       </div>
+
      <div class="input-group mb-3">
          <div class="input-group-prepend">
              <span class="input-group-text"><i class="fa fa-at"></i></span>
          </div>
          <input type="email" class="form-control" placeholder="Email" name="email" required >
      </div>
+
      <div class="input-group mb-3">
          <div class="input-group-prepend">
              <span class="input-group-text"><i class="fa fa-lock"></i></span>
@@ -35,6 +38,18 @@
              </div>
          </div>
      </div>
+
+     <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <div class='input-group-text'>
+                <div class='custom-control custom-switch'>
+                    <input type='checkbox' class='custom-control-input' id='isadmin' name="isAdmin" >
+                    <label class='custom-control-label' for='isadmin'>Admin</label>
+                 </div>
+             </div>
+         </div>
+     </div>
+
      <button class='btn btn-lg btn-primary btn-block' type='submit'>Register</button>
  </form>
 {% endblock %}
