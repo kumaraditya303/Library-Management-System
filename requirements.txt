@@ -3,7 +3,7 @@ SQLAlchemy==1.4.32
 alembic==1.7.7
 Flask_Login==0.6.0
 Flask_Testing==0.8.1
-Flask==2.0.2
+Flask==2.1.1
 Werkzeug==2.0.2
 Flask_Migrate==3.1.0
 gunicorn==20.1.0
