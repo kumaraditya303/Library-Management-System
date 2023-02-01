@@ -1,4 +1,4 @@
-Flask_SQLAlchemy==2.5.1
+Flask_SQLAlchemy==3.0.3
 SQLAlchemy==1.4.40
 alembic==1.9.0
 Flask_Login==0.6.0
