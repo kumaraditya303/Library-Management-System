@@ -1,5 +1,5 @@
 Flask_SQLAlchemy==2.5.1
-SQLAlchemy==1.4.40
+SQLAlchemy==2.0.7
 alembic==1.9.0
 Flask_Login==0.6.0
 Flask_Testing==0.8.1
